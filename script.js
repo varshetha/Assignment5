@@ -1,61 +1,71 @@
-document
-  .getElementById("registrationForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
-    let hasError = false;
-    clearErrors();
+const form = document.getElementById('registrationForm');
+const usResidentCheckbox = document.getElementById('usResident');
+const zipcodeContainer = document.getElementById('zipcodeContainer');
+const zipcodeInput = document.getElementById('zipcode');
 
-    // Name Validation
-    if (document.getElementById("name").value.length < 3) {
-      setError("nameError", "Name must be at least 3 characters long.");
-      hasError = true;
+usResidentCheckbox.addEventListener('change', function() {
+    zipcodeContainer.style.display = this.checked ? 'block' : 'none';
+    zipcodeInput.required = this.checked;
+});
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (validateForm()) {
+        document.getElementById('acceptedMessage').textContent = 'Accepted';
+        form.reset();
+    }
+});
+
+function validateForm() {
+    let isValid = true;
+
+    // Name validation
+    const name = document.getElementById('name').value;
+    if (name.length < 3) {
+        document.getElementById('nameError').textContent = 'Name must be at least 3 characters long.';
+        isValid = false;
+    } else {
+        document.getElementById('nameError').textContent = '';
     }
 
-    // Year of Birth Validation
-    let yearOfBirth = parseInt(
-      document.getElementById("yearOfBirth").value,
-      10
-    );
-    if (yearOfBirth < 1901 || yearOfBirth > 2099) {
-      setError(
-        "yearOfBirthError",
-        "Year of birth must be between 1901 and 2099."
-      );
-      hasError = true;
+    // Birth year validation
+    const birthYear = parseInt(document.getElementById('birthYear').value);
+    const currentYear = new Date().getFullYear();
+    if (isNaN(birthYear) || birthYear <= 1900 || birthYear >= currentYear) {
+        document.getElementById('birthYearError').textContent = 'Please enter a valid birth year (after 1900 and before current year).';
+        isValid = false;
+    } else {
+        document.getElementById('birthYearError').textContent = '';
     }
 
-    // US Checkbox & Zipcode Validation
-    let liveInUS = document.getElementById("liveInUS").checked;
-    let zipcode = document.getElementById("zipcode").value;
-    if (liveInUS && !/^\d{5}$/.test(zipcode)) {
-      setError("zipcodeError", "Zipcode must be a 5 digit number.");
-      hasError = true;
+    // Zipcode validation
+    if (usResidentCheckbox.checked) {
+        const zipcode = zipcodeInput.value;
+        if (!/^\d{5}$/.test(zipcode)) {
+            document.getElementById('zipcodeError').textContent = 'Please enter a valid 5-digit zipcode.';
+            isValid = false;
+        } else {
+            document.getElementById('zipcodeError').textContent = '';
+        }
     }
 
-    // Password Validation
-    if (document.getElementById("password").value.length < 8) {
-      setError("passwordError", "Password must be at least 8 characters long.");
-      hasError = true;
+    // Password validation
+    const password = document.getElementById('password').value;
+    if (password.length < 8) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long.';
+        isValid = false;
+    } else {
+        document.getElementById('passwordError').textContent = '';
     }
 
-    // Preferred Pizza Type Validation
-    if (document.getElementById("pizzaType").value === "") {
-      setError("pizzaTypeError", "You must select a preferred type of pizza.");
-      hasError = true;
+    // Pizza preference validation
+    const pizzaPreference = document.getElementById('pizzaPreference').value;
+    if (!pizzaPreference) {
+        document.getElementById('pizzaPreferenceError').textContent = 'Please select a pizza preference.';
+        isValid = false;
+    } else {
+        document.getElementById('pizzaPreferenceError').textContent = '';
     }
 
-    if (!hasError) {
-      document.getElementById("submissionMessage").textContent = "Accepted";
-    }
-  });
-
-function setError(id, message) {
-  document.getElementById(id).textContent = message;
-}
-
-function clearErrors() {
-  document.querySelectorAll(".error").forEach(function (errorDiv) {
-    errorDiv.textContent = "";
-  });
-  document.getElementById("submissionMessage").textContent = "";
+    return isValid;
 }

@@ -1,74 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register for Pizza Service</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Register for a Pizza</h1>
-      <form id="registrationForm">
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" required minlength="3" />
-          <div class="error" id="nameError"></div>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Service Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Pizza Service Registration</h1>
+    <form id="registrationForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span>
 
-        <div class="form-group">
-          <label for="yearOfBirth">Year of Birth:</label>
-          <input
-            type="number"
-            id="yearOfBirth"
-            name="yearOfBirth"
-            required
+        <label for="birthYear">Year of Birth:</label>
+        <input 
+            type="number" 
+            id="birthYear" 
+            name="birthYear" 
+            required 
             min="1901"
-            max="2099"
-          />
-          <div class="error" id="yearOfBirthError"></div>
+            max = "2023"
+        >
+        <span id="birthYearError" class="error"></span>
+
+        <label>
+            <input type="checkbox" id="usResident" name="usResident">
+            Do you live in the United States?
+        </label>
+
+        <div id="zipcodeContainer" style="display:none;">
+            <label for="zipcode">Zipcode:</label>
+            <input type="text" id="zipcode" name="zipcode">
+            <span id="zipcodeError" class="error"></span>
         </div>
 
-        <div class="form-group">
-          <label
-            ><input type="checkbox" id="liveInUS" name="liveInUS" /> Do you live
-            in the United States?</label
-          >
-        </div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <span id="passwordError" class="error"></span>
 
-        <div class="form-group">
-          <label for="zipcode">Zipcode:</label>
-          <input type="text" id="zipcode" name="zipcode" pattern="\d{5}" />
-          <div class="error" id="zipcodeError"></div>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            minlength="8"
-          />
-          <div class="error" id="passwordError"></div>
-        </div>
-
-        <div class="form-group">
-          <label>Preferred type of pizza:</label>
-          <select id="pizzaType" name="pizzaType" required>
-            <option value="">Please select</option>
-            <option value="With pineapple">With pineapple</option>
-            <option value="Without pineapple">Without pineapple</option>
-            <option value="I do not like pizza">I do not like pizza</option>
-          </select>
-          <div class="error" id="pizzaTypeError"></div>
-        </div>
+        <label for="pizzaPreference">Preferred type of pizza:</label>
+        <select id="pizzaPreference" name="pizzaPreference" required>
+            <option value="">Select an option</option>
+            <option value="withPineapple">With pineapple</option>
+            <option value="withoutPineapple">Without pineapple</option>
+            <option value="dontLike">I do not like pizza</option>
+        </select>
+        <span id="pizzaPreferenceError" class="error"></span>
 
         <button type="submit">Submit</button>
-        <div class="message" id="submissionMessage"></div>
-      </form>
-    </div>
+    </form>
+    <p id="acceptedMessage"></p>
+
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
