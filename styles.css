@@ -20,7 +20,7 @@ input[type="text"], input[type="number"], input[type="password"], select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #90c8ec;
     border-radius: 4px;
     box-sizing: border-box;
 }
